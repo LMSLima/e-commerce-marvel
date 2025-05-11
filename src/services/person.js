@@ -3,7 +3,7 @@ import axios from 'axios'
 class PersonService {
   async getAllPersons() {
     try {
-      const response = await axios.get(`/all.json`)
+      const response = await axios.get(`all.json`)
       const marvelCharacters = response.data.filter(
         (char) => char.biography.publisher === 'Marvel Comics',
       )
