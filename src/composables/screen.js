@@ -1,23 +1,26 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 
 export function useScreen() {
-  const browserWidth = ref(window.innerWidth);
-  const deviceWidth = ref(screen.width);
   const isMobile = ref(false);
 
-  const onBrowserResize = () => {
-    browserWidth.value = window.innerWidth;
-    deviceWidth.value = screen.width;
-    isMobile.value = window.innerWidth < 768;
+  const checkMobile = () => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const isSmallScreen = window.innerWidth < 768;
+    const isMobileUserAgent = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+
+    isMobile.value = isSmallScreen || isMobileUserAgent;
   };
 
   onMounted(() => {
-    window.addEventListener('resize', onBrowserResize);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    window.addEventListener('orientationchange', checkMobile);
   });
 
   onUnmounted(() => {
-    window.removeEventListener('resize', onBrowserResize);
+    window.removeEventListener('resize', checkMobile);
+    window.removeEventListener('orientationchange', checkMobile);
   });
 
-  return { browserWidth, deviceWidth, isMobile };
+  return { isMobile };
 }
