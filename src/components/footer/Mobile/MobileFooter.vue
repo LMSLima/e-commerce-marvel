@@ -10,8 +10,8 @@ const route = useRoute();
   <v-container class="pa-0 pt-4" fluid> 
     <v-bottom-navigation app grow>
       <v-btn 
-        @click="$router.push('/home')"
-        :color="route.path === '/home' ? 'red-darken-4' : ''"
+        @click="$router.push('/')"
+        :color="route.path === '/' ? 'red-darken-4' : ''"
       >
         <span><v-icon>mdi-home</v-icon></span>
       </v-btn>
